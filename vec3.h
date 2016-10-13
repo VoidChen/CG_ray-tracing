@@ -1,4 +1,3 @@
-#include<iostream>
 #include<cmath>
 using namespace std;
 
@@ -80,40 +79,4 @@ class vec3{
         vec3 unit(){
             return (*this)/this->length();
         }
-
 };
-
-int main(){
-    vec3 point1, point2, point3, point4;
-    point1.x = 1;
-    point1.y = 3;
-    point1.z = -5;
-
-    point2.r = 4;
-    point2.g = -2;
-    point2.b = -1;
-
-    point3 = point1 + point2;
-    cout << point3.x << " " << point3.y << " " << point3.z <<endl;
-
-    point3 = point1 - point2;
-    cout << point3.x << " " << point3.y << " " << point3.z <<endl;
-
-    point3 = point1 * 10;
-    cout << point3.x << " " << point3.y << " " << point3.z <<endl;
-
-    point3 = point1 / 10;
-    cout << point3.x << " " << point3.y << " " << point3.z <<endl;
-
-    cout << vec3::dot(point1, point2) <<endl;
-
-    point3 = vec3::cross(point1, point2);
-    cout << point3.x << " " << point3.y << " " << point3.z <<endl;
-
-    cout << point1.length() <<endl;
-
-    point3 = point1.unit();
-    cout << point3.x << " " << point3.y << " " << point3.z <<endl;
-
-    return 0;
-}
