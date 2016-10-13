@@ -12,6 +12,12 @@ class vec3{
         vec3(): x(data[0]), y(data[1]), z(data[2]), r(data[0]), g(data[1]), b(data[2]) {
         }
 
+        vec3(double d0, double d1, double d2): x(data[0]), y(data[1]), z(data[2]), r(data[0]), g(data[1]), b(data[2]) {
+            data[0] = d0;
+            data[1] = d1;
+            data[2] = d2;
+        }
+
         vec3& operator= (const vec3 &v){
             for(int i = 0; i < 3; ++i)
                 this->data[i] = v.data[i];
