@@ -1,5 +1,4 @@
 #include<cmath>
-using namespace std;
 
 class vec3{
     private:
