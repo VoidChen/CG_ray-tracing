@@ -5,13 +5,13 @@ int main(){
     camera C;
     sphere S;
     vec3 light;
-    double t, diffuse;
 
     C = camera(vec3(0, 0, 0), 1200, 600, vec3(-2, -1, -1), vec3(4, 0, 0), vec3(0, 2, 0));
     S = sphere(vec3(1, 2, -15), 5);
     light = vec3(-10, 15, -2);
 
     //render
+    double t, diffuse;
     for(int i = 0; i < C.height; ++i){
         for(int j = 0; j < C.width; ++j){
             t = S.hit(C.primary[i][j]);
@@ -23,7 +23,7 @@ int main(){
         }
     }
 
-    //genarate ppm
+    //generate ppm
     ppm image;
     image = ppm(C.width, C.height);
     image.set_color(C.color);
