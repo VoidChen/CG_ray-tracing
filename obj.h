@@ -36,4 +36,20 @@ class sphere{
             this->radius = radius;
         }
 
+        double hit(ray r){
+            double a = vec3::dot(r.direction, r.direction);
+            double b = vec3::dot(r.direction * 2, r.origin - center);
+            double c = vec3::dot(r.origin - center, r.origin - center) - radius * radius;
+
+            if(b*b - 4*a*c < 0)
+                return -1;
+            else{
+                double t1 = (-1*b + sqrt(b*b - 4*a*c)) / (2*a);
+                double t2 = (-1*b - sqrt(b*b - 4*a*c)) / (2*a);
+                if(t2 < 0)
+                    return t1;
+                else
+                    return t2;
+            }
+        }
 };
