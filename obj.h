@@ -1,4 +1,7 @@
+#ifndef vec3_h
 #include"vec3.h"
+#define vec3_h
+#endif
 
 class ray{
     public:
