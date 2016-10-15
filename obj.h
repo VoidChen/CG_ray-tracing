@@ -49,10 +49,14 @@ class sphere{
             else{
                 double t1 = (-1*b + sqrt(b*b - 4*a*c)) / (2*a);
                 double t2 = (-1*b - sqrt(b*b - 4*a*c)) / (2*a);
-                if(t2 < 0)
-                    return t1;
-                else
-                    return t2;
+                if(t1 < 0)
+                    return -1;
+                else{
+                    if(t2 < 0)
+                        return t1;
+                    else
+                        return t2;
+                }
             }
         }
 };
