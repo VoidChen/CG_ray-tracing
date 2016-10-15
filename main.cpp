@@ -1,24 +1,47 @@
+#include<vector>
 #include"camera.h"
+
+//ray-object hit test
+int multi_hit(ray r, vector<obj*> objs){
+    int result = -1;
+    double t, t_min;
+    for(unsigned int i = 0; i < objs.size(); ++i){
+        t = objs[i]->hit(r);
+        if(t != -1 && (t < t_min || result == -1)){
+            result = i;
+            t_min = t;
+        }
+    }
+    return result;
+}
 
 int main(){
     //init scene
+    vector<obj*> objs;
     camera C;
-    sphere S;
     vec3 light;
 
+    objs.push_back(new sphere(vec3(6, 4, -40), 5));
+    objs.push_back(new sphere(vec3(-6, -5, -30), 5));
+
     C = camera(vec3(0, 0, 0), 1200, 600, vec3(-2, -1, -1), vec3(4, 0, 0), vec3(0, 2, 0));
-    S = sphere(vec3(1, 2, -15), 5);
-    light = vec3(-10, 15, -2);
+    light = vec3(-10, 20, -15);
 
     //render
-    double t, diffuse;
+    int closest;
+    double diffuse;
+    vec3 hit_point;
     for(int i = 0; i < C.height; ++i){
         for(int j = 0; j < C.width; ++j){
-            t = S.hit(C.primary[i][j]);
-            if(t != -1){
-                vec3 hit_point = C.primary[i][j].point(t);
-                diffuse = vec3::dot(S.normal(hit_point).unit(), (light - hit_point).unit());
-                C.color[i][j] = vec3(255, 255, 255) * diffuse;
+            closest = multi_hit(C.primary[i][j], objs);
+            if(closest != -1){
+                hit_point = C.primary[i][j].point(objs[closest]->hit(C.primary[i][j]));
+                if(multi_hit(ray(light, hit_point - light), objs) == closest){
+                    diffuse = vec3::dot(objs[closest]->normal(hit_point).unit(), (light - hit_point).unit());
+                    C.color[i][j] = vec3(255, 255, 255) * diffuse;
+                }
+                else
+                    C.color[i][j] = vec3(0, 0, 0);
             }
         }
     }
