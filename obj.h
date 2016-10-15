@@ -26,7 +26,16 @@ class ray{
         }
 };
 
-class sphere{
+class obj{
+    public:
+        obj(){
+        }
+
+        virtual double hit(ray r) = 0;
+        virtual vec3 normal(vec3 point) = 0;
+};
+
+class sphere: public obj{
     public:
         vec3 center;
         double radius;
@@ -58,5 +67,9 @@ class sphere{
                         return t2;
                 }
             }
+        }
+
+        virtual vec3 normal(vec3 point){
+            return point - center;
         }
 };

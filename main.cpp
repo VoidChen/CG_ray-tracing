@@ -17,7 +17,7 @@ int main(){
             t = S.hit(C.primary[i][j]);
             if(t != -1){
                 vec3 hit_point = C.primary[i][j].point(t);
-                diffuse = vec3::dot((hit_point - S.center).unit(), (light - hit_point).unit());
+                diffuse = vec3::dot(S.normal(hit_point).unit(), (light - hit_point).unit());
                 C.color[i][j] = vec3(255, 255, 255) * diffuse;
             }
         }
