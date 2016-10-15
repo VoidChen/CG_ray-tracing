@@ -32,7 +32,7 @@ class obj{
         }
 
         virtual double hit(ray r) = 0;
-        virtual vec3 normal(vec3 point) = 0;
+        virtual vec3 normal(vec3 hit_point) = 0;
 };
 
 class sphere: public obj{
@@ -69,7 +69,35 @@ class sphere: public obj{
             }
         }
 
-        virtual vec3 normal(vec3 point){
-            return point - center;
+        virtual vec3 normal(vec3 hit_point){
+            return hit_point - center;
+        }
+};
+
+class plane: public obj{
+    public:
+        vec3 point;
+        vec3 plane_normal;
+
+        plane(){
+        }
+
+        plane(vec3 point, vec3 plane_normal){
+            this->point = point;
+            this->plane_normal = plane_normal;
+        }
+
+        double hit(ray r){
+            double a = vec3::dot(r.direction, plane_normal);
+            double b = vec3::dot(point - r.origin, plane_normal);
+
+            if(a == 0)
+                return -1;
+            else
+                return b/a >= 0 ? b/a: -1;
+        }
+
+        virtual vec3 normal(vec3 hit_point){
+            return plane_normal;
         }
 };

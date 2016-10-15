@@ -21,8 +21,9 @@ int main(){
     camera C;
     vec3 light;
 
-    objs.push_back(new sphere(vec3(6, 4, -40), 5));
-    objs.push_back(new sphere(vec3(-6, -5, -30), 5));
+    objs.push_back(new sphere(vec3(6, 8, -35), 6));
+    objs.push_back(new sphere(vec3(-6, -4, -30), 6));
+    objs.push_back(new plane(vec3(0, -25, 0), vec3(0, 1, 0)));
 
     C = camera(vec3(0, 0, 0), 1200, 600, vec3(-2, -1, -1), vec3(4, 0, 0), vec3(0, 2, 0));
     light = vec3(-10, 20, -15);
