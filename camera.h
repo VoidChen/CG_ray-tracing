@@ -1,5 +1,4 @@
 #include"obj.h"
-#include"ppm.h"
 
 class camera{
     public:

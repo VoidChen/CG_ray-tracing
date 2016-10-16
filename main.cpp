@@ -1,5 +1,6 @@
 #include<vector>
 #include"camera.h"
+#include"ppm.h"
 
 //ray-object hit test
 int multi_hit(ray r, vector<obj*> objs){
