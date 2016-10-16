@@ -44,6 +44,8 @@ int main(){
                 else
                     C.color[i][j] = vec3(0, 0, 0);
             }
+            else
+                C.color[i][j] = vec3(255*(C.height-i)/C.height, 255, 255);
         }
     }
 

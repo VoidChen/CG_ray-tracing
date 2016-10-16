@@ -35,7 +35,7 @@ class camera{
                 color[i] = new vec3[width];
                 for(int j = 0; j < width; ++j){
                     primary[i][j] = ray(origin, (lowerleft + unit_h * (j+0.5) + unit_v * (i+0.5) - origin));
-                    color[i][j] = vec3(255*(height-i)/height, 255, 255);
+                    color[i][j] = vec3(0, 0, 0);
                 }
             }
         }
