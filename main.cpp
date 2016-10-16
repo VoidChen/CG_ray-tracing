@@ -1,20 +1,7 @@
 #include<vector>
 #include"camera.h"
 #include"ppm.h"
-
-//ray-object hit test
-int multi_hit(ray r, vector<obj*> objs){
-    int result = -1;
-    double t, t_min;
-    for(unsigned int i = 0; i < objs.size(); ++i){
-        t = objs[i]->hit(r);
-        if(t != -1 && (t < t_min || result == -1)){
-            result = i;
-            t_min = t;
-        }
-    }
-    return result;
-}
+using namespace std;
 
 int main(){
     //init scene
