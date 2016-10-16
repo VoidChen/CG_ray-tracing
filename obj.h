@@ -71,7 +71,7 @@ class sphere: public obj{
             }
         }
 
-        virtual vec3 normal(vec3 hit_point){
+        vec3 normal(vec3 hit_point){
             return hit_point - center;
         }
 };
@@ -99,7 +99,7 @@ class plane: public obj{
                 return b/a >= 0 ? b/a: -1;
         }
 
-        virtual vec3 normal(vec3 hit_point){
+        vec3 normal(vec3 hit_point){
             return plane_normal;
         }
 };

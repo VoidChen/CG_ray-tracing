@@ -66,12 +66,11 @@ class vec3{
 
         static vec3 cross(const vec3 &v1, const vec3 &v2){
             vec3 result;
-            for(int i = 0; i < 3; ++i){
+            for(int i = 0; i < 3; ++i)
                 result.data[i] = v1.data[(i+1)%3]*v2.data[(i+2)%3] - v1.data[(i+2)%3]*v2.data[(i+1)%3];
-            }
 
             return result;
-       }
+        }
 
         double length(){
             double result = 0;

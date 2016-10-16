@@ -50,9 +50,8 @@ class ppm{
             fout << "P3" << endl << width << " " << height << endl << maxcolor << endl;
 
             for(int i = height-1; i >= 0; --i){
-                for(int j = 0; j < width; ++j){
+                for(int j = 0; j < width; ++j)
                     fout << data[i][j].r << " " << data[i][j].g << " " << data[i][j].b << " ";
-                }
                 fout << endl;
             }
 
