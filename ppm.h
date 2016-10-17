@@ -31,14 +31,21 @@ class ppm{
             data = NULL;
         }
 
-        void set_color(vec3 **c){
+        void set_color(vec3 **c, int sample){
             data = new color*[height];
             for(int i = height-1; i >= 0; --i){
                 data[i] = new color[width];
                 for(int j = 0; j < width; ++j){
-                    data[i][j].r = c[i][j].r >= 0 ? (c[i][j].r <= maxcolor ? c[i][j].r : maxcolor) : 0;
-                    data[i][j].g = c[i][j].g >= 0 ? (c[i][j].g <= maxcolor ? c[i][j].g : maxcolor) : 0;
-                    data[i][j].b = c[i][j].b >= 0 ? (c[i][j].b <= maxcolor ? c[i][j].b : maxcolor) : 0;
+                    vec3  avg= vec3(0, 0, 0);
+                    for(int k = i*sample; k < (i+1)*sample; ++k){
+                        for(int l = j*sample; l < (j+1)*sample; ++l)
+                            avg = avg + c[k][l];
+                    }
+                    avg = avg / (sample*sample);
+
+                    data[i][j].r = avg.r >= 0 ? (avg.r <= maxcolor ? avg.r : maxcolor) : 0;
+                    data[i][j].g = avg.g >= 0 ? (avg.g <= maxcolor ? avg.g : maxcolor) : 0;
+                    data[i][j].b = avg.b >= 0 ? (avg.b <= maxcolor ? avg.b : maxcolor) : 0;
                 }
             }
         }

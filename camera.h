@@ -5,6 +5,7 @@ class camera{
         vec3 origin;
         int width;
         int height;
+        int sample;
         vec3 lowerleft;
         vec3 horizontal;
         vec3 vertical;
@@ -14,16 +15,19 @@ class camera{
         camera(){
         }
 
-        camera(vec3 origin, int width, int height, vec3 ll, vec3 h, vec3 v){
-            //init camera
+        camera(vec3 origin, int width, int height, int sample, vec3 ll, vec3 h, vec3 v){
             this->origin = origin;
-            this->width = width;
-            this->height = height;
+            this->width = width * sample;
+            this->height = height * sample;
+            this->sample = sample;
             lowerleft = ll;
             horizontal = h;
             vertical = v;
+            init_primary_rays();
+        }
 
-            //primary rays
+    private:
+        void init_primary_rays(){
             vec3 unit_h = horizontal / width;
             vec3 unit_v = vertical / height;
 

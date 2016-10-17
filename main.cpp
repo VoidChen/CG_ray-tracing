@@ -4,17 +4,14 @@
 using namespace std;
 
 int main(){
-    //init scene
-    vector<obj*> objs;
-    camera C;
-    vec3 light;
+    //init
+    camera C = camera(vec3(0, 0, 0), 1200, 600, 3, vec3(-2, -0.8, -1), vec3(4, 0, 0), vec3(0, 2, 0));
+    vec3 light = vec3(-15, 20, -15);
 
+    vector<obj*> objs;
     objs.push_back(new sphere(vec3(6, 10, -40), 6));
     objs.push_back(new sphere(vec3(-6, -3, -35), 6));
     objs.push_back(new plane(vec3(0, -25, 0), vec3(0, 1, 0)));
-
-    C = camera(vec3(0, 0, 0), 1200, 600, vec3(-2, -0.8, -1), vec3(4, 0, 0), vec3(0, 2, 0));
-    light = vec3(-15, 20, -15);
 
     //render
     int closest;
@@ -39,8 +36,8 @@ int main(){
 
     //generate ppm
     ppm image;
-    image = ppm(C.width, C.height);
-    image.set_color(C.color);
+    image = ppm(C.width/C.sample, C.height/C.sample);
+    image.set_color(C.color, C.sample);
     image.output("output.ppm");
 
     return 0;
