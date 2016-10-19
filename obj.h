@@ -30,7 +30,18 @@ class ray{
 
 class obj{
     public:
+        vec3 color;
+
         obj(){
+        }
+
+        vec3 reflect (vec3 light){
+            vec3 result;
+            result.r = light.r * color.r;
+            result.g = light.g * color.g;
+            result.b = light.b * color.b;
+
+            return result;
         }
 
         virtual double hit(ray r) = 0;
@@ -45,9 +56,10 @@ class sphere: public obj{
         sphere(){
         }
 
-        sphere(vec3 center, double radius){
+        sphere(vec3 center, double radius, vec3 color){
             this->center = center;
             this->radius = radius;
+            this->color = color;
         }
 
         double hit(ray r){
@@ -84,9 +96,10 @@ class plane: public obj{
         plane(){
         }
 
-        plane(vec3 point, vec3 plane_normal){
+        plane(vec3 point, vec3 plane_normal, vec3 color){
             this->point = point;
             this->plane_normal = plane_normal;
+            this->color = color;
         }
 
         double hit(ray r){
