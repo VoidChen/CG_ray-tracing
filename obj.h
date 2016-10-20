@@ -26,6 +26,13 @@ class ray{
         vec3 point(double t){
             return origin + (direction * t);
         }
+
+        ray reflect(vec3 normal){
+            ray result;
+            result.origin = this->origin;
+            result.direction = normal.unit()*vec3::dot(normal.unit(), this->direction.unit())*2 - this->direction.unit();
+            return result;
+        }
 };
 
 class obj{
@@ -123,7 +130,7 @@ int multi_hit(ray r, vector<obj*> objs){
     double t, t_min;
     for(unsigned int i = 0; i < objs.size(); ++i){
         t = objs[i]->hit(r);
-        if(t != -1 && (t < t_min || result == -1)){
+        if(t != -1 && t > 1.0e-10 && (t < t_min || result == -1)){
             result = i;
             t_min = t;
         }

@@ -24,6 +24,15 @@ class vec3{
             return *this;
         }
 
+        bool operator!= (const vec3 &v){
+            for(int i = 0; i < 3; ++i){
+                if(this->data[i] != v.data[i])
+                    return true;
+            }
+
+            return false;
+        }
+
         vec3 operator+ (const vec3 &v){
             vec3 result;
             for(int i = 0; i < 3; ++i)
