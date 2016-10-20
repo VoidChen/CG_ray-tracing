@@ -15,8 +15,9 @@ vec3 trace(ray r, vector<obj*> &objs, vec3 light, int n){
             vec3 normal = objs[closest]->normal(hit_point).unit();
 
             //direct
-            if(multi_hit(ray(hit_point, light - hit_point), objs) == -1){
-                diffuse = vec3::dot(normal, (light - hit_point).unit());
+            ray shadow_ray = ray(hit_point, light - hit_point);
+            if(multi_hit(shadow_ray, objs) == -1){
+                diffuse = vec3::dot(normal, shadow_ray.direction.unit());
                 result = result + objs[closest]->reflect(vec3(255, 255, 255)) * diffuse;
             }
 
