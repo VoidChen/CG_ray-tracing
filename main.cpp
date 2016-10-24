@@ -3,7 +3,7 @@
 #include"ppm.h"
 using namespace std;
 
-vec3 trace(ray r, vector<obj*> &objs, vec3 light, int n){
+vec3 trace(ray &r, vector<obj*> &objs, vec3 &light, int n){
     if(n < 0)
         return vec3(0, 0, 0);
     else{

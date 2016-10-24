@@ -63,7 +63,7 @@ class ppm{
 
         void output(string filename){
             ofstream fout;
-            fout.open(filename.c_str());
+            fout.open(filename);
 
             fout << "P3" << endl << width << " " << height << endl << maxcolor << endl;
 

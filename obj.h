@@ -42,7 +42,7 @@ class obj{
         obj(){
         }
 
-        vec3 reflect (vec3 light){
+        vec3 reflect(vec3 light){
             vec3 result;
             result.r = light.r * color.r;
             result.g = light.g * color.g;
@@ -51,8 +51,8 @@ class obj{
             return result;
         }
 
-        virtual double hit(ray r) = 0;
-        virtual vec3 normal(vec3 hit_point) = 0;
+        virtual double hit(ray &r) = 0;
+        virtual vec3 normal(vec3 &hit_point) = 0;
 };
 
 class sphere: public obj{
@@ -69,7 +69,7 @@ class sphere: public obj{
             this->color = color;
         }
 
-        double hit(ray r){
+        double hit(ray &r) override{
             double a = vec3::dot(r.direction, r.direction);
             double b = vec3::dot(r.direction * 2, r.origin - center);
             double c = vec3::dot(r.origin - center, r.origin - center) - radius * radius;
@@ -90,7 +90,7 @@ class sphere: public obj{
             }
         }
 
-        vec3 normal(vec3 hit_point){
+        vec3 normal(vec3 &hit_point) override{
             return hit_point - center;
         }
 };
@@ -109,7 +109,7 @@ class plane: public obj{
             this->color = color;
         }
 
-        double hit(ray r){
+        double hit(ray &r) override{
             double a = vec3::dot(r.direction, plane_normal);
             double b = vec3::dot(point - r.origin, plane_normal);
 
@@ -119,13 +119,13 @@ class plane: public obj{
                 return b/a >= 0 ? b/a: -1;
         }
 
-        vec3 normal(vec3 hit_point){
+        vec3 normal(vec3 &hit_point) override{
             return plane_normal;
         }
 };
 
 //ray-object hit test
-int multi_hit(ray r, vector<obj*> objs){
+int multi_hit(ray &r, vector<obj*> &objs){
     int result = -1;
     double t, t_min;
     for(unsigned int i = 0; i < objs.size(); ++i){
