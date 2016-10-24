@@ -1,7 +1,7 @@
 編譯環境
     作業系統: Debian GNU/Linux testing (stretch)
-    編譯器: g++ 5.4.0
-    編譯參數: g++ -Wall --std=c++11 main.cpp
+    編譯器: g++ 6.2.0
+    編譯參數: g++ -Wall main.cpp
 
 額外功能
     Multiple sphere
