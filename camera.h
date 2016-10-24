@@ -1,3 +1,4 @@
+#include<cstddef>
 #include"obj.h"
 
 class camera{
@@ -12,9 +13,6 @@ class camera{
         ray** primary;
         vec3** color;
 
-        camera(){
-        }
-
         camera(vec3 origin, int width, int height, int sample, vec3 ll, vec3 h, vec3 v){
             this->origin = origin;
             this->width = width * sample;
@@ -24,6 +22,15 @@ class camera{
             horizontal = h;
             vertical = v;
             init_primary_rays();
+        }
+
+        ~camera(){
+            for(int i = 0; i < height; ++i){
+                delete [] primary[i];
+                delete [] color[i];
+            }
+            delete [] primary;
+            delete [] color;
         }
 
     private:

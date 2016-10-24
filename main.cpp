@@ -61,8 +61,7 @@ int main(){
     }
 
     //generate ppm
-    ppm image;
-    image = ppm(C.width/C.sample, C.height/C.sample);
+    ppm image = ppm(C.width/C.sample, C.height/C.sample);
     image.set_color(C.color, C.sample);
     image.output("output.ppm");
 

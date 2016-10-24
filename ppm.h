@@ -31,14 +31,19 @@ class ppm{
         int maxcolor;
         color **data;
 
-        ppm(){
-        }
-
         ppm(int w, int h, int mc = 255){
             width = w;
             height = h;
             maxcolor = mc;
             data = NULL;
+        }
+
+        ~ppm(){
+            if(data != NULL){
+                for(int i = 0; i < height; ++i)
+                    delete [] data[i];
+                delete [] data;
+            }
         }
 
         void set_color(vec3 **c, int sample){
