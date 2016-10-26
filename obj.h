@@ -33,11 +33,21 @@ class ray{
             result.direction = normal.unit()*vec3::dot(normal.unit(), this->direction.unit())*2 - this->direction.unit();
             return result;
         }
+
+        ray refract(vec3 hit_point, vec3 normal, double ri1, double ri2){
+            ray result;
+            double ri = ri1 / ri2;
+            double c = vec3::dot(this->direction, normal) * -1;
+            result.origin = hit_point;
+            result.direction = (this->direction * ri) + (normal * (ri*c - sqrt(1 - ri*ri*(1-c*c))));
+            return result;
+        }
 };
 
 class obj{
     public:
         vec3 color;
+        double ri;
 
         obj(){
         }
@@ -63,10 +73,11 @@ class sphere: public obj{
         sphere(){
         }
 
-        sphere(vec3 center, double radius, vec3 color){
+        sphere(vec3 center, double radius, vec3 color, double ri = 0){
             this->center = center;
             this->radius = radius;
             this->color = color;
+            this->ri = ri;
         }
 
         double hit(ray &r) override{
@@ -103,10 +114,11 @@ class plane: public obj{
         plane(){
         }
 
-        plane(vec3 point, vec3 plane_normal, vec3 color){
+        plane(vec3 point, vec3 plane_normal, vec3 color, double ri = 0){
             this->point = point;
             this->plane_normal = plane_normal;
             this->color = color;
+            this->ri = ri;
         }
 
         double hit(ray &r) override{

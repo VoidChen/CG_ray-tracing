@@ -21,13 +21,31 @@ vec3 trace(ray &r, vector<obj*> &objs, vec3 &light, int n){
                 result = result + objs[closest]->reflect(vec3(255, 255, 255)) * diffuse;
             }
 
-            //reflect
             if(n > 0){
+                //reflect
                 ray reflect_ray = ray(hit_point, r.origin - hit_point).reflect(normal);
                 vec3 reflect_color = trace(reflect_ray, objs, light, n-1);
                 if(reflect_color != vec3(-1, -1, -1)){
                     diffuse = vec3::dot(normal, reflect_ray.direction.unit());
-                    result = result + reflect_color * diffuse * 0.3;
+                    if(diffuse < 0)
+                        diffuse = diffuse * -1;
+                    result = result + reflect_color * diffuse * 0.5;
+                }
+
+                //refract
+                if(objs[closest]->ri != 0){
+                    ray refract_ray;
+                    if(vec3::dot(normal, r.direction) < 0)
+                        refract_ray = r.refract(hit_point, normal, 1.0, objs[closest]->ri);
+                    else
+                        refract_ray = r.refract(hit_point, normal * -1, objs[closest]->ri, 1.0);
+                    vec3 refract_color = trace(refract_ray, objs, light, n-1);
+                    if(refract_color != vec3(-1, -1, -1)){
+                        diffuse = vec3::dot(normal, refract_ray.direction.unit());
+                        if(diffuse < 0)
+                            diffuse = diffuse * -1;
+                        result = result + refract_color * diffuse * 1;
+                    }
                 }
             }
 
@@ -44,8 +62,8 @@ int main(){
     vec3 light = vec3(-15, 20, -15);
 
     vector<obj*> objs;
-    objs.push_back(new sphere(vec3(6, 10, -40), 6, vec3(1.0, 1.0, 0.35)));
-    objs.push_back(new sphere(vec3(-6, -3, -35), 6, vec3(1.0, 0.6, 0.6)));
+    objs.push_back(new sphere(vec3(6, 10, -40), 6, vec3(1.0, 1.0, 0.35), 0));
+    objs.push_back(new sphere(vec3(-6, -3, -35), 6, vec3(0, 0, 0), 1));
     objs.push_back(new plane(vec3(0, -25, 0), vec3(0, 1, 0), vec3(0.3, 0.9, 0.3)));
 
     //render
