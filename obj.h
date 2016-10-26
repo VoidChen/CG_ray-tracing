@@ -79,10 +79,10 @@ class sphere: public obj{
             else{
                 double t1 = (-1*b + sqrt(b*b - 4*a*c)) / (2*a);
                 double t2 = (-1*b - sqrt(b*b - 4*a*c)) / (2*a);
-                if(t1 < 0)
+                if(t1 < 1.0e-10)
                     return -1;
                 else{
-                    if(t2 < 0)
+                    if(t2 < 1.0e-10)
                         return t1;
                     else
                         return t2;
@@ -116,7 +116,7 @@ class plane: public obj{
             if(a == 0)
                 return -1;
             else
-                return b/a >= 0 ? b/a: -1;
+                return b/a >= -1.0e-10 ? b/a: -1;
         }
 
         vec3 normal(vec3 &hit_point) override{
