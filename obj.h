@@ -37,7 +37,7 @@ class ray{
         ray refract(vec3 hit_point, vec3 normal, double ri1, double ri2){
             ray result;
             double ri = ri1 / ri2;
-            double c = vec3::dot(this->direction, normal) * -1;
+            double c = vec3::dot(this->direction.unit(), normal) * -1;
             result.origin = hit_point;
             result.direction = (this->direction * ri) + (normal * (ri*c - sqrt(1 - ri*ri*(1-c*c))));
             return result;
@@ -45,18 +45,19 @@ class ray{
 };
 
 class obj{
+    protected:
+        vec3 surface_color;
     public:
-        vec3 color;
         double ri;
 
         obj(){
         }
 
-        vec3 reflect(vec3 light){
+        vec3 color(vec3 light){
             vec3 result;
-            result.r = light.r * color.r;
-            result.g = light.g * color.g;
-            result.b = light.b * color.b;
+            result.r = light.r * surface_color.r;
+            result.g = light.g * surface_color.g;
+            result.b = light.b * surface_color.b;
 
             return result;
         }
@@ -76,7 +77,7 @@ class sphere: public obj{
         sphere(vec3 center, double radius, vec3 color, double ri = 0){
             this->center = center;
             this->radius = radius;
-            this->color = color;
+            this->surface_color = color;
             this->ri = ri;
         }
 
@@ -117,7 +118,7 @@ class plane: public obj{
         plane(vec3 point, vec3 plane_normal, vec3 color, double ri = 0){
             this->point = point;
             this->plane_normal = plane_normal;
-            this->color = color;
+            this->surface_color = color;
             this->ri = ri;
         }
 

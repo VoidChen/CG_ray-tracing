@@ -9,16 +9,17 @@ vec3 trace(ray &r, vector<obj*> &objs, vec3 &light, int n){
     else{
         int closest = multi_hit(r, objs);
         if(closest != -1){
-            double diffuse;
+            obj* hit_obj = objs[closest];
+            vec3 hit_point = r.point(hit_obj->hit(r));
+            vec3 normal = hit_obj->normal(hit_point).unit();
             vec3 result = vec3(0, 0, 0);
-            vec3 hit_point = r.point(objs[closest]->hit(r));
-            vec3 normal = objs[closest]->normal(hit_point).unit();
+            double diffuse;
 
             //direct
             ray shadow_ray = ray(hit_point, light - hit_point);
             if(multi_hit(shadow_ray, objs) == -1){
                 diffuse = vec3::dot(normal, shadow_ray.direction.unit());
-                result = result + objs[closest]->reflect(vec3(255, 255, 255)) * diffuse;
+                result = result + hit_obj->color(vec3(255, 255, 255)) * diffuse;
             }
 
             if(n > 0){
@@ -33,12 +34,12 @@ vec3 trace(ray &r, vector<obj*> &objs, vec3 &light, int n){
                 }
 
                 //refract
-                if(objs[closest]->ri != 0){
+                if(hit_obj->ri != 0){
                     ray refract_ray;
                     if(vec3::dot(normal, r.direction) < 0)
-                        refract_ray = r.refract(hit_point, normal, 1.0, objs[closest]->ri);
+                        refract_ray = r.refract(hit_point, normal, 1.0, hit_obj->ri);
                     else
-                        refract_ray = r.refract(hit_point, normal * -1, objs[closest]->ri, 1.0);
+                        refract_ray = r.refract(hit_point, normal * -1, hit_obj->ri, 1.0);
                     vec3 refract_color = trace(refract_ray, objs, light, n-1);
                     if(refract_color != vec3(-1, -1, -1)){
                         diffuse = vec3::dot(normal, refract_ray.direction.unit());
