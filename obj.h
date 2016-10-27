@@ -13,11 +13,6 @@ class ray{
         ray(){
         }
 
-        ray(double ox, double oy, double oz, double dx, double dy, double dz){
-            origin = vec3(ox, oy, oz);
-            direction = vec3(dx, dy, dz);
-        }
-
         ray(vec3 origin, vec3 direction){
             this->origin = origin;
             this->direction = direction;
@@ -58,6 +53,7 @@ class light{
 class obj{
     protected:
         vec3 surface_color;
+
     public:
         double ri;
 
