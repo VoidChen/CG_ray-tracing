@@ -44,6 +44,17 @@ class ray{
         }
 };
 
+class light{
+    public:
+        vec3 origin;
+        vec3 intensity;
+
+        light(vec3 origin, vec3 intensity){
+            this->origin = origin;
+            this->intensity = intensity;
+        }
+};
+
 class obj{
     protected:
         vec3 surface_color;

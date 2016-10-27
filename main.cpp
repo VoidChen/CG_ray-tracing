@@ -3,7 +3,7 @@
 #include"ppm.h"
 using namespace std;
 
-vec3 trace(ray &r, vector<obj*> &objs, vec3 &light, int n){
+vec3 trace(ray &r, vector<obj*> &objs, light &l, int n){
     if(n < 0)
         return vec3(0, 0, 0);
     else{
@@ -16,16 +16,16 @@ vec3 trace(ray &r, vector<obj*> &objs, vec3 &light, int n){
             double diffuse;
 
             //direct
-            ray shadow_ray = ray(hit_point, light - hit_point);
+            ray shadow_ray = ray(hit_point, l.origin - hit_point);
             if(multi_hit(shadow_ray, objs) == -1){
                 diffuse = vec3::dot(normal, shadow_ray.direction.unit());
-                result = result + hit_obj->color(vec3(255, 255, 255)) * diffuse;
+                result = result + hit_obj->color(l.intensity) * diffuse;
             }
 
             if(n > 0){
                 //reflect
                 ray reflect_ray = ray(hit_point, r.origin - hit_point).reflect(normal);
-                vec3 reflect_color = trace(reflect_ray, objs, light, n-1);
+                vec3 reflect_color = trace(reflect_ray, objs, l, n-1);
                 if(reflect_color != vec3(-1, -1, -1)){
                     diffuse = vec3::dot(normal, reflect_ray.direction.unit());
                     if(diffuse < 0)
@@ -40,7 +40,7 @@ vec3 trace(ray &r, vector<obj*> &objs, vec3 &light, int n){
                         refract_ray = r.refract(hit_point, normal, 1.0, hit_obj->ri);
                     else
                         refract_ray = r.refract(hit_point, normal * -1, hit_obj->ri, 1.0);
-                    vec3 refract_color = trace(refract_ray, objs, light, n-1);
+                    vec3 refract_color = trace(refract_ray, objs, l, n-1);
                     if(refract_color != vec3(-1, -1, -1)){
                         diffuse = vec3::dot(normal, refract_ray.direction.unit());
                         if(diffuse < 0)
@@ -60,7 +60,7 @@ vec3 trace(ray &r, vector<obj*> &objs, vec3 &light, int n){
 int main(){
     //init
     camera C = camera(vec3(0, 0, 0), 1200, 600, 3, vec3(-2, -0.75, -1), vec3(4, 0, 0), vec3(0, 2, 0));
-    vec3 light = vec3(-15, 20, -15);
+    light L = light(vec3(-15, 20, -15), vec3(255, 255, 255));
 
     vector<obj*> objs;
     objs.push_back(new sphere(vec3(6, 10, -40), 6, vec3(1.0, 1.0, 0.35), 0));
@@ -71,7 +71,7 @@ int main(){
     vec3 trace_color;
     for(int i = 0; i < C.height; ++i){
         for(int j = 0; j < C.width; ++j){
-            trace_color = trace(C.primary[i][j], objs, light, 10);
+            trace_color = trace(C.primary[i][j], objs, L, 10);
             if(trace_color != vec3(-1, -1, -1))
                 C.color[i][j] = trace_color;
             else
