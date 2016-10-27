@@ -1,10 +1,8 @@
 #include<cmath>
 
 class vec3{
-    private:
-        double data[3];
-
     public:
+        double data[3];
         double &x, &y, &z;
         double &r, &g, &b;
 

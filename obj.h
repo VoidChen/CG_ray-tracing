@@ -56,6 +56,9 @@ class obj{
 
     public:
         double ri;
+        double local_fix;
+        double reflect_fix;
+        double refract_fix;
 
         obj(){
         }
@@ -81,10 +84,13 @@ class sphere: public obj{
         sphere(){
         }
 
-        sphere(vec3 center, double radius, vec3 color, double ri = 0){
+        sphere(vec3 center, double radius, vec3 color, vec3 fix, double ri = 0){
             this->center = center;
             this->radius = radius;
             this->surface_color = color;
+            local_fix = fix.data[0];
+            reflect_fix = fix.data[1];
+            refract_fix = fix.data[2];
             this->ri = ri;
         }
 
@@ -122,10 +128,13 @@ class plane: public obj{
         plane(){
         }
 
-        plane(vec3 point, vec3 plane_normal, vec3 color, double ri = 0){
+        plane(vec3 point, vec3 plane_normal, vec3 color, vec3 fix, double ri = 0){
             this->point = point;
             this->plane_normal = plane_normal;
             this->surface_color = color;
+            local_fix = fix.data[0];
+            reflect_fix = fix.data[1];
+            refract_fix = fix.data[2];
             this->ri = ri;
         }
 
