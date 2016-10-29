@@ -3,10 +3,26 @@
     編譯器: g++ 6.2.0
     編譯參數: g++ -Wall main.cpp
 
-額外功能
+基本功能
     Multiple sphere
-        包含兩個球面, 球心分別位於 (6, 10, -40), (-6, -3, -35), 半徑皆為6
+        6個小球面
+            6個不透明球面
+        3個大球面
+            1個透明球面
+            1個鏡面球面
+            1個不透明並有反射之球面
+
+    Recursive intersection with refraction and transmission
+        trace function 以遞迴方式計算
+
+    Material attribute
+        反射係數
+        折射率
+        合成直射、反射及折射之係數
+
+額外功能
     Ray-plane intersection
-        包含一個 y=-25 之平面
+        1個 y=-25 之平面
+
     Antialiasing
         利用 Supersampling 之方式, 每個 pixel 皆以數個 primary ray 取樣結果之平均值計算
