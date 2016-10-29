@@ -1,5 +1,8 @@
 #include<cstddef>
+#ifndef obj_h
 #include"obj.h"
+#define obj_h
+#endif
 
 class camera{
     public:
