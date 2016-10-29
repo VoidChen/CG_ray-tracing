@@ -59,7 +59,7 @@ vec3 trace(ray &r, vector<obj*> &objs, light &l, int n){
 
 int main(){
     //init
-    camera C = camera(vec3(0, 0, 0), 1200, 600, 3, vec3(-2, -0.75, -1), vec3(4, 0, 0), vec3(0, 2, 0));
+    camera C = camera(vec3(0, 0, 0), 1500, 900, 3, vec3(-2.5, -1.3, -1.5), vec3(5, 0, 0), vec3(0, 3, 0));
     light L = light(vec3(-15, 25, -15), vec3(255, 255, 255));
 
     vector<obj*> objs;
