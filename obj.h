@@ -156,7 +156,7 @@ class plane: public obj{
 //ray-object hit test
 int multi_hit(ray &r, vector<obj*> &objs){
     int result = -1;
-    double t, t_min;
+    double t, t_min = 0;
     for(unsigned int i = 0; i < objs.size(); ++i){
         t = objs[i]->hit(r);
         if(t != -1 && t > 1.0e-10 && (t < t_min || result == -1)){
