@@ -26,3 +26,5 @@
 
     Antialiasing
         利用 Supersampling 之方式, 每個 pixel 皆以數個 primary ray 取樣結果之平均值計算
+
+    BMP format output
