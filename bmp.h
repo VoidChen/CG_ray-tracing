@@ -90,7 +90,9 @@ class pixel_data{
         }
 
         ~pixel_data(){
-            //TBD
+            for(unsigned int i = 0; i < height; ++i)
+                delete [] data[i];
+            delete [] data;
         }
 
         void output(ofstream &fout){
