@@ -2,6 +2,7 @@
 #include"camera.h"
 #include"tracer.h"
 #include"ppm.h"
+#include"bmp.h"
 using namespace std;
 
 int main(){
@@ -38,5 +39,7 @@ int main(){
     image.set_color(C.color, C.sample);
     image.output("output.ppm");
 
+    BMP bmp = BMP(C.width, C.height, C.color);
+    bmp.output("output.bmp");
     return 0;
 }
