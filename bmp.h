@@ -8,7 +8,7 @@ using namespace std;
 
 class BGRA{
     public:
-        char data[4];
+        unsigned char data[4];
 
         BGRA(){
         }
