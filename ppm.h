@@ -7,19 +7,20 @@
 #endif
 using namespace std;
 
-class color{
-    public:
-        int rgb[3];
-};
+class PPM{
+    private:
+        class color{
+            public:
+                int rgb[3];
+        };
 
-class ppm{
     public:
         int width;
         int height;
         int maxcolor;
         color **data;
 
-        ppm(int w, int h, vec3 **avg, int mc = 255){
+        PPM(int w, int h, vec3 **avg, int mc = 255){
             width = w;
             height = h;
             maxcolor = mc;
@@ -34,7 +35,7 @@ class ppm{
             }
         }
 
-        ~ppm(){
+        ~PPM(){
             for(int i = 0; i < height; ++i)
                 delete [] data[i];
             delete [] data;
