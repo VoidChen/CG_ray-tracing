@@ -19,22 +19,10 @@ class ppm{
         int maxcolor;
         color **data;
 
-        ppm(int w, int h, int mc = 255){
+        ppm(int w, int h, vec3 **avg, int mc = 255){
             width = w;
             height = h;
             maxcolor = mc;
-            data = NULL;
-        }
-
-        ~ppm(){
-            if(data != NULL){
-                for(int i = 0; i < height; ++i)
-                    delete [] data[i];
-                delete [] data;
-            }
-        }
-
-        void set_color(vec3 **avg){
             data = new color*[height];
             for(int i = height-1; i >= 0; --i){
                 data[i] = new color[width];
@@ -44,6 +32,12 @@ class ppm{
                     }
                 }
             }
+        }
+
+        ~ppm(){
+            for(int i = 0; i < height; ++i)
+                delete [] data[i];
+            delete [] data;
         }
 
         void output(string filename){

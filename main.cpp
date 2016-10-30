@@ -36,8 +36,7 @@ int main(){
     C.avg_sample();
 
     //generate ppm
-    ppm image = ppm(C.width, C.height);
-    image.set_color(C.avg->color);
+    ppm image = ppm(C.width, C.height, C.avg->color);
     image.output("output.ppm");
 
     BMP bmp = BMP(C.width, C.height, C.avg->color);
