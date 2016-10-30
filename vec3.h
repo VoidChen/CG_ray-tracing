@@ -21,7 +21,6 @@ class vec3{
         vec3& operator= (const vec3 &v){
             for(int i = 0; i < 3; ++i)
                 this->data[i] = v.data[i];
-
             return *this;
         }
 
@@ -30,7 +29,6 @@ class vec3{
                 if(this->data[i] != v.data[i])
                     return true;
             }
-
             return false;
         }
 
@@ -38,7 +36,6 @@ class vec3{
             vec3 result;
             for(int i = 0; i < 3; ++i)
                 result.data[i] = this->data[i] + v.data[i];
-
             return result;
         }
 
@@ -46,7 +43,6 @@ class vec3{
             vec3 result;
             for(int i = 0; i < 3; ++i)
                 result.data[i] = this->data[i] - v.data[i];
-
             return result;
         }
 
@@ -54,7 +50,6 @@ class vec3{
             vec3 result;
             for(int i = 0; i < 3; ++i)
                 result.data[i] = this->data[i] * s;
-
             return result;
         }
 
@@ -62,15 +57,33 @@ class vec3{
             vec3 result;
             for(int i = 0; i < 3; ++i)
                 result.data[i] = this->data[i] / s;
-
             return result;
+        }
+
+        vec3 operator+= (const vec3 &v){
+            *this = *this + v;
+            return *this;
+        }
+
+        vec3 operator-= (const vec3 &v){
+            *this = *this - v;
+            return *this;
+        }
+
+        vec3 operator*= (const double &s){
+            *this = *this * s;
+            return *this;
+        }
+
+        vec3 operator/= (const double &s){
+            *this = *this / s;
+            return *this;
         }
 
         static double dot(const vec3 &v1, const vec3 &v2){
             double result = 0;
             for(int i = 0; i < 3; ++i)
                 result += v1.data[i] * v2.data[i];
-
             return result;
         }
 
@@ -78,7 +91,6 @@ class vec3{
             vec3 result;
             for(int i = 0; i < 3; ++i)
                 result.data[i] = v1.data[(i+1)%3]*v2.data[(i+2)%3] - v1.data[(i+2)%3]*v2.data[(i+1)%3];
-
             return result;
         }
 
@@ -86,7 +98,6 @@ class vec3{
             double result = 0;
             for(int i = 0; i < 3; ++i)
                 result += this->data[i] * this->data[i];
-
             return sqrt(result);
         }
 

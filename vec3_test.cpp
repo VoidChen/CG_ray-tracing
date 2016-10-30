@@ -22,6 +22,19 @@ int main(){
     point3 = point1 / 10;
     cout << point3.x << " " << point3.y << " " << point3.z <<endl;
 
+    point3 += point2;
+    cout << point3.x << " " << point3.y << " " << point3.z <<endl;
+
+    point3 -= point2;
+    cout << point3.x << " " << point3.y << " " << point3.z <<endl;
+
+    point3 *= 10;
+    cout << point3.x << " " << point3.y << " " << point3.z <<endl;
+
+    point3 /= 10;
+    cout << point3.x << " " << point3.y << " " << point3.z <<endl;
+
+
     cout << vec3::dot(point1, point2) <<endl;
 
     point3 = vec3::cross(point1, point2);
