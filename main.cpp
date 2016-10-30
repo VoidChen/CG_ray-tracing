@@ -24,22 +24,23 @@ int main(){
 
     //render
     vec3 trace_color;
-    for(int i = 0; i < C.height; ++i){
-        for(int j = 0; j < C.width; ++j){
+    for(int i = 0; i < C.height_s; ++i){
+        for(int j = 0; j < C.width_s; ++j){
             trace_color = trace(C.primary[i][j], objs, L, 15);
             if(trace_color != vec3(-1, -1, -1))
-                C.color[i][j] = trace_color;
+                C.raw->color[i][j] = trace_color;
             else
-                C.color[i][j] = vec3(255*(C.height-i)/C.height, 255, 255);
+                C.raw->color[i][j] = vec3(255*(C.height_s-i)/C.height_s, 255, 255);
         }
     }
+    C.avg_sample();
 
     //generate ppm
-    ppm image = ppm(C.width/C.sample, C.height/C.sample);
-    image.set_color(C.color, C.sample);
+    ppm image = ppm(C.width, C.height);
+    image.set_color(C.avg->color);
     image.output("output.ppm");
 
-    BMP bmp = BMP(C.width, C.height, C.color);
+    BMP bmp = BMP(C.width, C.height, C.avg->color);
     bmp.output("output.bmp");
     return 0;
 }

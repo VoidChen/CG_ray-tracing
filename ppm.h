@@ -13,25 +13,6 @@ class color{
 };
 
 class ppm{
-    private:
-        vec3** avg_sample(vec3 **c, int sample){
-            vec3 **result;
-            result = new vec3*[height];
-            for(int i = 0; i < height; ++i){
-                result[i] = new vec3[width];
-                for(int j = 0; j < width; ++j){
-                    result[i][j] = vec3(0, 0, 0);
-                    for(int k = i*sample; k < (i+1)*sample; ++k){
-                        for(int l = j*sample; l < (j+1)*sample; ++l){
-                            result[i][j] = result[i][j] + c[k][l];
-                        }
-                    }
-                    result[i][j] = result[i][j] / (sample*sample);
-                }
-            }
-            return result;
-        }
-
     public:
         int width;
         int height;
@@ -53,8 +34,7 @@ class ppm{
             }
         }
 
-        void set_color(vec3 **c, int sample){
-            vec3 **avg = avg_sample(c, sample);
+        void set_color(vec3 **avg){
             data = new color*[height];
             for(int i = height-1; i >= 0; --i){
                 data[i] = new color[width];

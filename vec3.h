@@ -7,6 +7,9 @@ class vec3{
         double &r, &g, &b;
 
         vec3(): x(data[0]), y(data[1]), z(data[2]), r(data[0]), g(data[1]), b(data[2]) {
+            data[0] = 0;
+            data[1] = 0;
+            data[2] = 0;
         }
 
         vec3(double d0, double d1, double d2): x(data[0]), y(data[1]), z(data[2]), r(data[0]), g(data[1]), b(data[2]) {
