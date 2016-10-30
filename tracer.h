@@ -35,7 +35,7 @@ vec3 trace(ray &r, vector<obj*> &objs, light &l, int n){
             ray shadow_ray = ray(hit_point, l.origin - hit_point);
             if(multi_hit(shadow_ray, objs) == -1){
                 diffuse = vec3::dot(normal, shadow_ray.direction.unit());
-                result = result + hit_obj->color(l.intensity) * diffuse * hit_obj->local_fix;
+                result += hit_obj->color(l.intensity) * diffuse * hit_obj->local_fix;
             }
 
             if(n > 0){
@@ -45,8 +45,8 @@ vec3 trace(ray &r, vector<obj*> &objs, light &l, int n){
                 if(reflect_color != vec3(-1, -1, -1)){
                     diffuse = vec3::dot(normal, reflect_ray.direction.unit());
                     if(diffuse < 0)
-                        diffuse = diffuse * -1;
-                    result = result + reflect_color * diffuse * hit_obj->reflect_fix;
+                        diffuse *= -1;
+                    result += reflect_color * diffuse * hit_obj->reflect_fix;
                 }
 
                 //refract
@@ -60,8 +60,8 @@ vec3 trace(ray &r, vector<obj*> &objs, light &l, int n){
                     if(refract_color != vec3(-1, -1, -1)){
                         diffuse = vec3::dot(normal, refract_ray.direction.unit());
                         if(diffuse < 0)
-                            diffuse = diffuse * -1;
-                        result = result + refract_color * diffuse * hit_obj->refract_fix;
+                            diffuse *= -1;
+                        result += refract_color * diffuse * hit_obj->refract_fix;
                     }
                 }
             }

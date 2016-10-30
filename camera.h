@@ -66,11 +66,11 @@ class camera{
             avg = new color_array(width, height);
             for(int i = 0; i < height_s; ++i){
                 for(int j = 0; j < width_s; ++j)
-                    avg->color[i/sample][j/sample] = avg->color[i/sample][j/sample] + raw->color[i][j];
+                    avg->color[i/sample][j/sample] += raw->color[i][j];
             }
             for(int i = 0; i < height; ++i){
                 for(int j = 0; j < width; ++j)
-                    avg->color[i][j] = avg->color[i][j] / (sample*sample);
+                    avg->color[i][j] /= (sample*sample);
             }
         }
 
