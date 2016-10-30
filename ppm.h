@@ -9,20 +9,27 @@ using namespace std;
 
 class color{
     public:
-        int r;
-        int g;
-        int b;
+        int rgb[3];
 };
 
 class ppm{
     private:
-        vec3 avg_sample(vec3 **c, int h, int w, int sample){
-            vec3 result = vec3(0, 0, 0);
-            for(int i = h*sample; i < (h+1)*sample; ++i){
-                for(int j = w*sample; j < (w+1)*sample; ++j)
-                    result = result + c[i][j];
+        vec3** avg_sample(vec3 **c, int sample){
+            vec3 **result;
+            result = new vec3*[height];
+            for(int i = 0; i < height; ++i){
+                result[i] = new vec3[width];
+                for(int j = 0; j < width; ++j){
+                    result[i][j] = vec3(0, 0, 0);
+                    for(int k = i*sample; k < (i+1)*sample; ++k){
+                        for(int l = j*sample; l < (j+1)*sample; ++l){
+                            result[i][j] = result[i][j] + c[k][l];
+                        }
+                    }
+                    result[i][j] = result[i][j] / (sample*sample);
+                }
             }
-            return result / (sample*sample);
+            return result;
         }
 
     public:
@@ -47,16 +54,14 @@ class ppm{
         }
 
         void set_color(vec3 **c, int sample){
-            vec3 avg;
-
+            vec3 **avg = avg_sample(c, sample);
             data = new color*[height];
             for(int i = height-1; i >= 0; --i){
                 data[i] = new color[width];
                 for(int j = 0; j < width; ++j){
-                    avg = avg_sample(c, i, j, sample);
-                    data[i][j].r = avg.r >= 0 ? (avg.r <= maxcolor ? avg.r : maxcolor) : 0;
-                    data[i][j].g = avg.g >= 0 ? (avg.g <= maxcolor ? avg.g : maxcolor) : 0;
-                    data[i][j].b = avg.b >= 0 ? (avg.b <= maxcolor ? avg.b : maxcolor) : 0;
+                    for(int k = 0; k < 3; ++k){
+                        data[i][j].rgb[k] = avg[i][j].data[k] >= 0 ? (avg[i][j].data[k] <= maxcolor ? avg[i][j].data[k] : maxcolor) : 0;
+                    }
                 }
             }
         }
@@ -68,8 +73,10 @@ class ppm{
             fout << "P3" << endl << width << " " << height << endl << maxcolor << endl;
 
             for(int i = height-1; i >= 0; --i){
-                for(int j = 0; j < width; ++j)
-                    fout << data[i][j].r << " " << data[i][j].g << " " << data[i][j].b << " ";
+                for(int j = 0; j < width; ++j){
+                    for(int k = 0; k < 3; ++k)
+                        fout << data[i][j].rgb[k] << " ";
+                }
                 fout << endl;
             }
 
