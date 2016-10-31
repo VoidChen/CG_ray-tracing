@@ -10,7 +10,7 @@ class BMP{
     private:
         class BGRA{
             public:
-                unsigned char data[4];
+                unsigned char bgra[4];
         };
 
         class bitmap_header{
@@ -74,7 +74,7 @@ class BMP{
                 unsigned int width;
                 unsigned int height;
 
-                pixel_data(unsigned int w, unsigned int h, vec3 **c){
+                pixel_data(unsigned int w, unsigned int h, vec3 **ca){
                     width = w;
                     height = h;
                     data = new BGRA*[height];
@@ -82,8 +82,8 @@ class BMP{
                         data[i] = new BGRA[width];
                         for(unsigned int j = 0; j < width; ++j){
                             for(int k = 0; k < 3; ++k)
-                                data[i][j].data[2-k] = c[i][j].data[k] >= 0 ? (c[i][j].data[k] <= 255 ? c[i][j].data[k] : 255) : 0;
-                            data[i][j].data[3] = 100;
+                                data[i][j].bgra[2-k] = ca[i][j].data[k] >= 0 ? (ca[i][j].data[k] <= 255 ? ca[i][j].data[k] : 255) : 0;
+                            data[i][j].bgra[3] = 100;
                         }
                     }
                 }
@@ -97,7 +97,7 @@ class BMP{
                 void output(ofstream &fout){
                     for(unsigned int i = 0; i < height; ++i){
                         for(unsigned int j = 0; j < width; ++j){
-                            fout.write((char*)data[i][j].data, sizeof(BGRA));
+                            fout.write((char*)data[i][j].bgra, sizeof(BGRA));
                         }
                     }
                 }

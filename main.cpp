@@ -41,5 +41,6 @@ int main(){
 
     BMP bmp = BMP(C.width, C.height, C.avg->color);
     bmp.output("output.bmp");
+
     return 0;
 }

@@ -9,7 +9,7 @@ using namespace std;
 
 class PPM{
     private:
-        class color{
+        class RGB{
             public:
                 int rgb[3];
         };
@@ -18,18 +18,18 @@ class PPM{
         int width;
         int height;
         int maxcolor;
-        color **data;
+        RGB **data;
 
-        PPM(int w, int h, vec3 **avg, int mc = 255){
+        PPM(int w, int h, vec3 **ca, int mc = 255){
             width = w;
             height = h;
             maxcolor = mc;
-            data = new color*[height];
+            data = new RGB*[height];
             for(int i = height-1; i >= 0; --i){
-                data[i] = new color[width];
+                data[i] = new RGB[width];
                 for(int j = 0; j < width; ++j){
                     for(int k = 0; k < 3; ++k){
-                        data[i][j].rgb[k] = avg[i][j].data[k] >= 0 ? (avg[i][j].data[k] <= maxcolor ? avg[i][j].data[k] : maxcolor) : 0;
+                        data[i][j].rgb[k] = ca[i][j].data[k] >= 0 ? (ca[i][j].data[k] <= maxcolor ? ca[i][j].data[k] : maxcolor) : 0;
                     }
                 }
             }
