@@ -19,6 +19,10 @@ int multi_hit(ray &r, vector<obj*> &objs){
     return result;
 }
 
+vec3 background_color(ray &r){
+    return vec3((1 - (r.direction.unit().y + 1)/2) * 255, 255, 255);
+}
+
 vec3 trace(ray &r, vector<obj*> &objs, light &l, int n){
     if(n < 0)
         return vec3(0, 0, 0);
@@ -69,6 +73,6 @@ vec3 trace(ray &r, vector<obj*> &objs, light &l, int n){
             return result;
         }
         else
-            return vec3(-1, -1, -1);
+            return background_color(r);
     }
 }

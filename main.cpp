@@ -23,15 +23,9 @@ int main(){
     objs.push_back(new plane(vec3(0, -25, 0), vec3(0, 1, 0), vec3(0.3, 0.9, 0.3), vec3(0.9, 0.6, 0))); //ground
 
     //render
-    vec3 trace_color;
     for(int i = 0; i < C.height_s; ++i){
-        for(int j = 0; j < C.width_s; ++j){
-            trace_color = trace(C.primary[i][j], objs, L, 15);
-            if(trace_color != vec3(-1, -1, -1))
-                C.raw->color[i][j] = trace_color;
-            else
-                C.raw->color[i][j] = vec3(255*(C.height_s-i)/C.height_s, 255, 255);
-        }
+        for(int j = 0; j < C.width_s; ++j)
+            C.raw->color[i][j] = trace(C.primary[i][j], objs, L, 15);
     }
     C.avg_sample();
 
