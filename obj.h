@@ -34,7 +34,7 @@ class ray{
             double ri = ri1 / ri2;
             double c = vec3::dot(this->direction.unit(), normal) * -1;
             result.origin = hit_point;
-            result.direction = (this->direction * ri) + (normal * (ri*c - sqrt(1 - ri*ri*(1-c*c))));
+            result.direction = (this->direction.unit() * ri) + (normal * (ri*c - sqrt(1 - ri*ri*(1-c*c))));
             return result;
         }
 };
