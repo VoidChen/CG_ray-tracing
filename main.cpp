@@ -6,8 +6,8 @@ using namespace std;
 
 int main(){
     //init
-    camera C = camera(vec3(0, 0, 0), 1500, 900, 3, vec3(-2.5, -1.3, -1.5), vec3(5, 0, 0), vec3(0, 3, 0));
-    light L = light(vec3(-15, 25, -15), vec3(255, 255, 255));
+    camera C = camera(vec3(0, 0, 0), 1500, 900, 3, vec3(-2.5, -1.4, -2), vec3(5, 0, 0), vec3(0, 3, 0));
+    light L = light(vec3(-15, 25, -10), vec3(255, 255, 255));
 
     vector<obj*> objs;
     objs.push_back(new sphere(vec3(7, 2.5, -35), 1.5, vec3(1.0, 0.6, 0.6), vec3(1, 0, 0), 0)); //pink
@@ -16,8 +16,8 @@ int main(){
     objs.push_back(new sphere(vec3(-5, 16, -55), 1.5, vec3(1.0, 0.1, 0.1), vec3(1, 0, 0), 0)); //red
     objs.push_back(new sphere(vec3(-12, 5.5, -37.5), 1.5, vec3(0.2, 0.5, 1), vec3(1, 0, 0), 0)); //dark blue
     objs.push_back(new sphere(vec3(-7, 9, -40), 4, vec3(1.0, 1.0, 0.35), vec3(0.75, 0.25, 0), 0)); //yellow
-    objs.push_back(new sphere(vec3(-6, -6, -25), 1, vec3(0.9, 0.9, 0.9), vec3(1, 0, 0), 0)); //gray
-    objs.push_back(new sphere(vec3(-4, 0.5, -30), 4, vec3(0, 0, 0), vec3(0, 0, 1.0), 1.8)); //glass
+    objs.push_back(new sphere(vec3(-6, -6, -27.5), 1, vec3(0.9, 0.9, 0.9), vec3(1, 0, 0), 0)); //gray
+    objs.push_back(new sphere(vec3(-4, -1, -30), 4, vec3(0, 0, 0), vec3(0, 0, 1.0), 1.8)); //glass
     objs.push_back(new sphere(vec3(5, 10, -50), 7, vec3(0, 0, 0), vec3(0, 1.0, 0), 0)); //mirror
     objs.push_back(new plane(vec3(0, -25, 0), vec3(0, 1, 0), vec3(0.3, 0.9, 0.3), vec3(1, 0, 0), 0)); //ground
 
