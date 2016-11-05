@@ -38,8 +38,7 @@ class camera{
         vec3 horizontal;
         vec3 vertical;
         ray** primary;
-        color_array* raw;
-        color_array* avg;
+        color_array* ca;
 
         camera(vec3 origin, int width, int height, int sample, vec3 ll, vec3 h, vec3 v){
             this->origin = origin;
@@ -52,35 +51,25 @@ class camera{
             horizontal = h;
             vertical = v;
             init_primary_rays();
-            raw = new color_array(width_s, height_s);
         }
 
         ~camera(){
             for(int i = 0; i < height_s; ++i)
                 delete [] primary[i];
             delete [] primary;
-            delete raw;
-            delete avg;
-        }
-
-        void avg_sample(){
-            avg = new color_array(width, height);
-            for(int i = 0; i < height_s; ++i){
-                for(int j = 0; j < width_s; ++j)
-                    avg->color[i/sample][j/sample] += raw->color[i][j];
-            }
-            for(int i = 0; i < height; ++i){
-                for(int j = 0; j < width; ++j)
-                    avg->color[i][j] /= (sample*sample);
-            }
+            delete ca;
         }
 
         void render(vector<obj*> &objs, light &L, int depth){
+            ca = new color_array(width, height);
             for(int i = 0; i < height_s; ++i){
                 for(int j = 0; j < width_s; ++j)
-                    raw->color[i][j] = trace(primary[i][j], objs, L, depth);
+                    ca->color[i/sample][j/sample] += trace(primary[i][j], objs, L, depth);
             }
-            avg_sample();
+            for(int i = 0; i < height; ++i){
+                for(int j = 0; j < width; ++j)
+                    ca->color[i][j] /= (sample*sample);
+            }
         }
 
     private:
