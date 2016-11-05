@@ -1,4 +1,5 @@
 #include<cstddef>
+#include"tracer.h"
 #ifndef obj_h
 #include"obj.h"
 #define obj_h
@@ -72,6 +73,14 @@ class camera{
                 for(int j = 0; j < width; ++j)
                     avg->color[i][j] /= (sample*sample);
             }
+        }
+
+        void render(vector<obj*> &objs, light &L, int depth){
+            for(int i = 0; i < height_s; ++i){
+                for(int j = 0; j < width_s; ++j)
+                    raw->color[i][j] = trace(primary[i][j], objs, L, depth);
+            }
+            avg_sample();
         }
 
     private:

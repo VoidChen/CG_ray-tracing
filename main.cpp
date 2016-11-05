@@ -1,6 +1,5 @@
 #include<vector>
 #include"camera.h"
-#include"tracer.h"
 #include"ppm.h"
 #include"bmp.h"
 using namespace std;
@@ -23,11 +22,7 @@ int main(){
     objs.push_back(new plane(vec3(0, -25, 0), vec3(0, 1, 0), vec3(0.3, 0.9, 0.3), vec3(1, 0, 0), 0)); //ground
 
     //render
-    for(int i = 0; i < C.height_s; ++i){
-        for(int j = 0; j < C.width_s; ++j)
-            C.raw->color[i][j] = trace(C.primary[i][j], objs, L, 15);
-    }
-    C.avg_sample();
+    C.render(objs, L, 15);
 
     //generate image
     PPM ppm = PPM(C.width, C.height, C.avg->color);
