@@ -1,9 +1,9 @@
 #include<vector>
+#include<cmath>
 #ifndef vec3_h
 #include"vec3.h"
 #define vec3_h
 #endif
-#include<iostream>
 using namespace std;
 
 class ray{
@@ -57,6 +57,7 @@ class light{
 class obj{
     protected:
         vec3 surface_color;
+        vec3 attenuation_c;
 
     public:
         double ri;
@@ -76,6 +77,14 @@ class obj{
             return result;
         }
 
+        vec3 attenuation(vec3 light, double distance){
+            vec3 result;
+            for(int i = 0; i < 3; ++i)
+                result.data[i] = light.data[i] * exp(log(attenuation_c.data[i]) * distance);
+
+            return result;
+        }
+
         virtual double hit(ray &r) = 0;
         virtual vec3 normal(vec3 &hit_point) = 0;
 };
@@ -88,10 +97,11 @@ class sphere: public obj{
         sphere(){
         }
 
-        sphere(vec3 center, double radius, vec3 color, vec3 fix, double ri = 0){
+        sphere(vec3 center, double radius, vec3 color, vec3 fix, double ri = 0, vec3 ac = vec3(0, 0, 0)){
             this->center = center;
             this->radius = radius;
             this->surface_color = color;
+            this->attenuation_c = ac;
             local_fix = fix.data[0];
             reflect_fix = fix.data[1];
             refract_fix = fix.data[2];
@@ -132,10 +142,11 @@ class plane: public obj{
         plane(){
         }
 
-        plane(vec3 point, vec3 plane_normal, vec3 color, vec3 fix, double ri = 0){
+        plane(vec3 point, vec3 plane_normal, vec3 color, vec3 fix, double ri = 0, vec3 ac = vec3(0, 0, 0)){
             this->point = point;
             this->plane_normal = plane_normal;
             this->surface_color = color;
+            this->attenuation_c = ac;
             local_fix = fix.data[0];
             reflect_fix = fix.data[1];
             refract_fix = fix.data[2];

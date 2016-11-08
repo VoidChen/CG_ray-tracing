@@ -23,6 +23,28 @@ vec3 background_color(ray &r){
     return vec3((1 - (r.direction.unit().y + 1)/2) * 255, 255, 255);
 }
 
+vec3 attenuation(ray &r, vector<obj*> &objs, light &l, bool flag){
+    int closest = multi_hit(r, objs);
+    if(closest == -1)
+        return l.intensity;
+    else{
+        obj* hit_obj = objs[closest];
+        if(hit_obj->ri != 0){
+            vec3 hit_point = r.point(hit_obj->hit(r));
+            ray next_ray = ray(hit_point, r.direction);
+            vec3 input_light = attenuation(next_ray, objs, l, !flag);
+            if(flag)
+                //light leave obj
+                return hit_obj->attenuation(input_light, (hit_point - r.origin).length());
+            else
+                //light enter obj
+                return input_light;
+        }
+        else
+            return vec3(0, 0, 0);
+    }
+}
+
 vec3 trace(ray &r, vector<obj*> &objs, light &l, int n){
     if(n < 0)
         return vec3(0, 0, 0);
@@ -37,10 +59,9 @@ vec3 trace(ray &r, vector<obj*> &objs, light &l, int n){
 
             //local
             ray shadow_ray = ray(hit_point, l.origin - hit_point);
-            if(multi_hit(shadow_ray, objs) == -1){
-                diffuse = vec3::dot(normal, shadow_ray.direction.unit());
-                result += hit_obj->color(l.intensity) * diffuse * hit_obj->local_fix;
-            }
+            vec3 local_light = attenuation(shadow_ray, objs, l, true);
+            diffuse = vec3::dot(normal, shadow_ray.direction.unit());
+            result += hit_obj->color(local_light) * diffuse * hit_obj->local_fix;
 
             if(n > 0){
                 //reflect
