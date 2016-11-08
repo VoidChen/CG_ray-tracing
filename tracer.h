@@ -60,12 +60,14 @@ vec3 trace(ray &r, vector<obj*> &objs, light &l, int n){
                         refract_ray = r.refract(hit_point, normal, 1.0, hit_obj->ri);
                     else
                         refract_ray = r.refract(hit_point, normal * -1, hit_obj->ri, 1.0);
-                    vec3 refract_color = trace(refract_ray, objs, l, n-1);
-                    if(refract_color != vec3(-1, -1, -1)){
-                        diffuse = vec3::dot(normal, refract_ray.direction.unit());
-                        if(diffuse < 0)
-                            diffuse *= -1;
-                        result += refract_color * diffuse * hit_obj->refract_fix;
+                    if(refract_ray.direction != vec3(0, 0, 0)){
+                        vec3 refract_color = trace(refract_ray, objs, l, n-1);
+                        if(refract_color != vec3(-1, -1, -1)){
+                            diffuse = vec3::dot(normal, refract_ray.direction.unit());
+                            if(diffuse < 0)
+                                diffuse *= -1;
+                            result += refract_color * diffuse * hit_obj->refract_fix;
+                        }
                     }
                 }
             }
