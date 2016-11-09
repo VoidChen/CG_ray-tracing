@@ -34,10 +34,10 @@ vec3 attenuation(ray &r, vector<obj*> &objs, light &l, bool flag){
             ray next_ray = ray(hit_point, r.direction);
             vec3 input_light = attenuation(next_ray, objs, l, !flag);
             if(flag)
-                //light leave obj
+                //light pass obj
                 return hit_obj->attenuation(input_light, (hit_point - r.origin).length());
             else
-                //light enter obj
+                //light pass air
                 return input_light;
         }
         else
@@ -59,7 +59,7 @@ vec3 trace(ray &r, vector<obj*> &objs, light &l, int n){
 
             //local
             ray shadow_ray = ray(hit_point, l.origin - hit_point);
-            vec3 local_light = attenuation(shadow_ray, objs, l, true);
+            vec3 local_light = attenuation(shadow_ray, objs, l, false);
             diffuse = vec3::dot(normal, shadow_ray.direction.unit());
             result += hit_obj->color(local_light) * diffuse * hit_obj->local_fix;
 
