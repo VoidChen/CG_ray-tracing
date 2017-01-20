@@ -6,7 +6,7 @@ using namespace std;
 
 int main(){
     //init
-    camera C = camera(vec3(0, 0, 0), 1500, 900, 3, vec3(-2.5, -1.4, -2), vec3(5, 0, 0), vec3(0, 3, 0));
+    camera C = camera(vec3(0, 0, 0), 1500, 900, 3, vec3(-2.5, -1.6, -2.25), vec3(5, 0, 0), vec3(0, 3, 0));
     light L = light(vec3(-15, 25, -10), vec3(255, 255, 255));
 
     vector<obj*> objs;
