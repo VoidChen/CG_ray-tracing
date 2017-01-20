@@ -8,4 +8,4 @@ A simple ray tracer.
 - Light attenuation
 
 ## Demo
-<img src="http://void.moe/graph/CG_ray_tracing.bmp">
+<img src="https://github.com/VoidChen/CG_ray-tracing/blob/demo/output.bmp">
